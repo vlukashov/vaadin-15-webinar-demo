@@ -1,5 +1,5 @@
 import {css, customElement, html, LitElement} from 'lit-element';
-import {render} from 'lit-html';
+import {render, TemplateResult} from 'lit-html';
 import {until} from 'lit-html/directives/until';
 
 import '@polymer/iron-icon/iron-icon.js';
@@ -10,42 +10,52 @@ import '@vaadin/vaadin-ordered-layout/vaadin-horizontal-layout.js';
 import '@vaadin/vaadin-ordered-layout/vaadin-vertical-layout.js';
 
 import * as CardListEndpoint from '../../generated/CardListEndpoint';
-import Card from '../../generated/com/example/application/views/cardlist/CardListEndpoint/Card';
+import Card from '../../generated/com/example/application/views/cardlist/Card';
 
 @customElement('card-list-view')
 export class CardListView extends LitElement {
   render() {
-    const cardRenderer = (
-      root: DocumentFragment,
-      _: any,
-      { item }: { item: Card }
-    ) => {
-      render(html`
-        <vaadin-horizontal-layout class="card">
-          <img src="${item.img}">
-          <vaadin-vertical-layout>
-            <vaadin-horizontal-layout class="header">
-              <span class="name">${item.name}</span>
-              <span class="date">${item.date}</span>
-            </vaadin-horizontal-layout>
-            <span class="post">${item.post}</span>
-            <vaadin-horizontal-layout class="actions">
-              <iron-icon icon="vaadin:heart"></iron-icon>
-              <span class="likes">${item.likes}</span>
-              <iron-icon icon="vaadin:comment"></iron-icon>
-              <span class="comments">${item.comments}</span>
-              <iron-icon icon="vaadin:connect"></iron-icon>
-              <span class="shares">${item.shares}</span>
-            </vaadin-horizontal-layout>
-          </vaadin-vertical-layout>
-        </vaadin-horizontal-layout>
-      `, root);
-    };
+    const df = new Intl.DateTimeFormat('en', {
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const nf = new Intl.NumberFormat('en', {
+      notation: 'compact',
+      compactDisplay: 'short'
+    });
+
+    // const rdf = new Intl.RelativeTimeFormat('en', {
+    //   style: 'narrow',
+    // });
+
+    // <span class="date">${rdf.format(
+    //   (new Date(item.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) | 0,
+    //   'days')}</span>
 
     return html`
       <vaadin-grid id="grid" theme="no-border no-row-borders"
         .items="${until(CardListEndpoint.list(), [])}">
-        <vaadin-grid-column .renderer="${cardRenderer}">
+        <vaadin-grid-column .renderer="${renderer(card => html`
+          <vaadin-horizontal-layout class="card">
+            <img src="${card.imgUrl}">
+            <vaadin-vertical-layout>
+              <vaadin-horizontal-layout class="header">
+                <span class="name">${card.name}</span>
+                <span class="date">${df.format(new Date(card.date))}</span>
+              </vaadin-horizontal-layout>
+              <span class="post">${card.post}</span>
+              <vaadin-horizontal-layout class="actions">
+                <iron-icon icon="vaadin:heart"></iron-icon>
+                <span class="likes">${nf.format(card.likes)}</span>
+                <iron-icon icon="vaadin:comment"></iron-icon>
+                <span class="comments">${card.comments}</span>
+                <iron-icon icon="vaadin:connect"></iron-icon>
+                <span class="shares">${card.shares}</span>
+              </vaadin-horizontal-layout>
+            </vaadin-vertical-layout>
+          </vaadin-horizontal-layout>
+        `)}">
         </vaadin-grid-column>
       </vaadin-grid>
     `;
@@ -126,5 +136,15 @@ export class CardListView extends LitElement {
         }
       `
     ];
+  }
+}
+
+function renderer(fn: (card: Card) => TemplateResult) {
+  return function(
+    root: Element | DocumentFragment,
+    _: any,
+    { item }: { item: Card }
+  ) {
+    render(fn(item), root);
   }
 }
