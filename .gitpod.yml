@@ -13,7 +13,6 @@ ports:
 github:
   prebuilds:
     master: true
-    gitpod: true
 vscode:
   extensions:
     - runem.lit-plugin@1.1.10:/yk3Arh4MIQ3RwIcHwbX3Q==
