@@ -11,10 +11,15 @@ const { serverSideRoutes } = new Flow({
 });
 
 const routes = [
-  {path: '', component: 'main-view', children: [  {path: 'card-list', component: 'card-list-view'},
-  {path: 'form', component: 'form-view'},
- ...serverSideRoutes]},
-
+  {
+    path: '',
+    component: 'main-view',
+    children: [
+      {path: 'card-list', component: 'card-list-view'},
+      {path: 'form', component: 'form-view'},
+      ...serverSideRoutes
+    ]
+  },
 ];
 
 const router = new Router(document.querySelector('#outlet'));
