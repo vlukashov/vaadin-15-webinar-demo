@@ -1,7 +1,9 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/vlukashov/vaadin-15-webinar-demo)
+
 # Custom project from start.vaadin.com
 
 This project was created from https://start.vaadin.com. It's a fully working Vaadin application that you continue developing locally.
-It has all the necessary dependencies and files to help you get going. 
+It has all the necessary dependencies and files to help you get going.
 
 The project is a standard Maven project, so you can import it to your IDE of choice. You'll need to have Java 8+ and Node.js 10+ installed.
 
