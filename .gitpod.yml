@@ -6,6 +6,10 @@ ports:
     onOpen: open-preview
   - port: 9001
     onOpen: ignore
+  - port: 35729
+    onOpen: ignore
+  - port: 35730
+    onOpen: ignore
 github:
   prebuilds:
     master: true
