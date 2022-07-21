@@ -62,7 +62,7 @@
     "webpack-dev-server": "3.10.3",
     "webpack-livereload-plugin": "^2.3.0",
     "webpack-merge": "4.2.2",
-    "terser": "4.6.7",
+    "terser": "4.8.1",
     "progress-webpack-plugin": "0.0.24",
     "lit-element": "2.3.1"
   },
@@ -124,7 +124,7 @@
       "typescript": "3.8.3",
       "webpack-merge": "4.2.2",
       "webpack-dev-server": "3.10.3",
-      "terser": "4.6.7",
+      "terser": "4.8.1",
       "progress-webpack-plugin": "0.0.24",
       "lit-element": "2.3.1"
     },
